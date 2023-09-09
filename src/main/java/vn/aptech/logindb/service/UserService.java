@@ -3,9 +3,13 @@ package vn.aptech.logindb.service;
 import vn.aptech.logindb.entity.User;
 import vn.aptech.logindb.util.DatabaseUtil;
 
+import javax.persistence.EntityManager;
+import javax.persistence.Persistence;
+import javax.persistence.Query;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.List;
 
 public class UserService {
 
@@ -34,6 +38,25 @@ public class UserService {
             System.out.println("Error login: " + e.getMessage());
             return null;
         }
+    }
+
+    public User loginUsingJPA(String username, String password) {
+        EntityManager em = Persistence.createEntityManagerFactory("loginapp-pu").createEntityManager();
+        User user = null;
+        try {
+            Query query = em.createQuery("select u from Users u where u.username = :username and u.password = :password", User.class);
+            query.setParameter("username", username);
+            query.setParameter("password", password);
+            List list = query.getResultList();
+            if (!list.isEmpty()) {
+                user = (User) list.get(0);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            em.close();
+        }
+        return user;
     }
 
     public static void main(String[] args) {

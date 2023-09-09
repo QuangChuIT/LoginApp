@@ -5,6 +5,11 @@
     <title>Product list</title>
 </head>
 <body>
+<form action="/ProductServlet" method="post">
+    <label>Search: </label>
+    <input type="text" name="name" id="name">
+    <input type="submit" value="Search">
+</form>
 <table border="1">
     <thead>
     <tr>

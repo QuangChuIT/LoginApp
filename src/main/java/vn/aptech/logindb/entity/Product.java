@@ -1,11 +1,23 @@
 package vn.aptech.logindb.entity;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.io.Serializable;
 
+@Entity(name = "Products")
+@Table(name = "products")
 public class Product implements Serializable,Comparable<Product> {
+    @Id
     private Long id;
+    @Column(name = "name", nullable = false)
     private String name;
+
+    @Column(name = "quantity")
     private Integer quantity;
+
+    @Column(name = "price")
     private Long price;
 
     public Long getId() {

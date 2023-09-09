@@ -1,11 +1,25 @@
 package vn.aptech.logindb.entity;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.io.Serializable;
 
+@Entity(name = "Users")
+@Table(name = "users")
 public class User implements Serializable {
+    @Id
+    @Column(name = "id")
     private Long id;
+
+    @Column(name = "username", length = 100)
     private String username;
+
+    @Column(name = "password", length = 30)
     private String password;
+
+    @Column(name = "name", length = 100)
     private String name;
 
     public User() {

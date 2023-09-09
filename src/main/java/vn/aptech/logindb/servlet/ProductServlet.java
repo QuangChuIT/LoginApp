@@ -29,7 +29,8 @@ public class ProductServlet extends HttpServlet {
         String action = req.getParameter("action");
 
         if (action == null) {
-            List<Product> products = ProductService.getInstance().getProducts();
+            String name = req.getParameter("name");
+            List<Product> products = ProductService.getInstance().getProductsUsingJPA(name);
             req.setAttribute("products", products);
             req.getRequestDispatcher("product_list.jsp").forward(req, resp);
         }

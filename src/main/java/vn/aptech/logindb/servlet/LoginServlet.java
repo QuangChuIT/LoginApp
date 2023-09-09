@@ -26,7 +26,7 @@ public class LoginServlet extends HttpServlet {
             request.setAttribute("errMsg", "Username and password is required !");
             request.getRequestDispatcher("login.jsp").forward(request, response);
         } else {
-            User user = userService.login(username, password);
+            User user = userService.loginUsingJPA(username, password);
             if (user != null) {
                 HttpSession session = request.getSession(true);
                 session.setAttribute("id", user.getId());
