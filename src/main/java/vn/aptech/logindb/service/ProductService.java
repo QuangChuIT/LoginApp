@@ -75,4 +75,46 @@ public class ProductService {
             em.close();
         }
     }
+
+    public String createProduct(Long id, String name, Integer quantity, Long price) {
+        EntityManager em = Persistence.createEntityManagerFactory("loginapp-pu").createEntityManager();
+        try {
+            em.getTransaction().begin();
+            Product product = new Product();
+            product.setId(id);
+            product.setName(name);
+            product.setQuantity(quantity);
+            product.setPrice(price);
+            em.persist(product);
+            em.getTransaction().commit();
+            return "OK";
+        } catch (Exception e) {
+            e.printStackTrace();
+            em.getTransaction().rollback();
+            return "Create product fail: " + e.getMessage();
+        } finally {
+            em.close();
+        }
+    }
+
+    public boolean delete(Long id) {
+        boolean result = false;
+        EntityManager em = Persistence.createEntityManagerFactory("loginapp-pu").createEntityManager();
+        try {
+            em.getTransaction().begin();
+            Product product = em.find(Product.class, id);
+
+            if (product != null) {
+                em.remove(product);
+                result = true;
+                em.getTransaction().commit();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            em.getTransaction().rollback();
+        } finally {
+            em.close();
+        }
+        return result;
+    }
 }
